@@ -1,8 +1,8 @@
 
 ## Parse Progressive's monthly policyholder growth release
-monthly.URL <- "http://investors.progressive.com/phoenix.zhtml?c=81824&p=irol-newsArticle&ID=2254784"
-results.year <- 2017
-results.month <- 2
+monthly.URL <- "http://investors.progressive.com/phoenix.zhtml?c=81824&p=irol-newsArticle&ID=2211492"
+results.year <- 2016
+results.month <- 9
 
 library(XML)
 library(RCurl)
@@ -51,9 +51,12 @@ for (i in 1:nrow(policy.data)) {
 month.output <- as.data.frame(t(month.output))
 colnames(month.output) <- unlist(month.output[1, ])
 month.output <- month.output[-1, ]
+month.output <- cbind(results.year = rep(results.year, nrow(month.output)),
+                      results.month = rep(results.month, nrow(month.output)),
+                      month.output)
 month.output
 
 #Write output to a csv file
-write.location <- paste('C:/Users/Colin/Desktop/Progressive Results/PIF/', results.year,
-                        results.month, '.csv')
+write.location <- paste0('C:/Users/Colin/Desktop/Progressive Results/PIF/', results.year,
+                         results.month, '.csv')
 write.csv(month.output, write.location)
